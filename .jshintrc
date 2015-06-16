@@ -1,0 +1,7 @@
+{
+	"indent": 4,
+	"predef": [
+		"angular",
+		"console"
+	]
+}

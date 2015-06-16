@@ -43,8 +43,11 @@
 			];
 
 			var addPosting = function() {
-				var newPosting = { username: 'Poster', content: $scope.postingContent};
-				postings.unshift(newPosting);
+				var postingContent = $scope.postingContent; 
+				if (postingContent) {
+					var newPosting = { username: 'Poster', content: postingContent};
+					postings.unshift(newPosting);
+				}
 				$scope.postingContent = null;
 			};
 
