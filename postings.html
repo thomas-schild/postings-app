@@ -28,30 +28,28 @@
 
 		var app = angular.module('postingsApp', []);
 
-		app.controller('postingsCtrl', function($scope) {
+		app.controller('postingsCtrl', function($scope, $http) {
 
-			var postings = [ {
-					username: 'User-A',
-					content: 'posting #a'
-				}, {
-					username: 'User-B',
-					content: 'posting #b'					
-				}, {
-					username: 'User-C',
-					content: 'posting #c'
-				}
-			];
+			var listPostings = function() {
+				$http.get('http://localhost:3001/api/postings').success(function(postings) {
+					$scope.postings = postings;
+				});
+			};
 
 			var addPosting = function() {
 				var postingContent = $scope.postingContent; 
 				if (postingContent) {
 					var newPosting = { username: 'Poster', content: postingContent};
-					postings.unshift(newPosting);
+					if ($scope.postings) {
+						$scope.postings.unshift(newPosting);
+					} else {
+						$scope.postings = [ newPosting ];
+					}
 				}
 				$scope.postingContent = null;
 			};
 
-			$scope.postings = postings;
+			$scope.listPostings = listPostings;
 			$scope.addPosting = addPosting;
 		});
 	</script>
