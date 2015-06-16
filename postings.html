@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<title>PostingsApp</title>
+</head>
+<body ng-app="postingsApp">
+	<div class="container" ng-controller="postingsCtrl">
+		<h1>Create a posting</h1>
+		<button class="btn btn-default" ng-click="addPosting()">App Posting</button>
+
+		<h1>Recents Posts:</h1>
+		<ul class="list-group" ng-repeat="posting in postings">
+			<li class="list-group-item">
+				<strong>@{{posting.username}}</strong>
+				<span>{{posting.content}}</span>
+			</li>
+		</ul>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+	<script>
+		// TODO: move angular code into its own file
+		'use strict';
+
+		var app = angular.module('postingsApp', []);
+
+		app.controller('postingsCtrl', function($scope) {
+
+			var postings = [ {
+					username: 'User-A',
+					content: 'posting #a'
+				}, {
+					username: 'User-B',
+					content: 'posting #b'					
+				}, {
+					username: 'User-C',
+					content: 'posting #c'
+				}
+			];
+
+			var addPosting = function() {
+				var newPosting = { username: 'Poster', content: 'new posting'};
+				console.log('addPosting() called');
+				postings.unshift(newPosting);
+			};
+
+			$scope.postings = postings;
+			$scope.addPosting = addPosting;
+		});
+	</script>
+
+</body>
+</html>
