@@ -31,8 +31,12 @@
 		app.controller('postingsCtrl', function($scope, $http) {
 
 			var listPostings = function() {
-				$http.get('http://localhost:3001/api/postings').success(function(postings) {
+				$http.get('http://localhost:3001/api/postings')
+				.success(function(postings) {
 					$scope.postings = postings;
+				})
+				.error(function(err) {
+					console.log('error on listPostings(): ' + err);
 				});
 			};
 
@@ -51,6 +55,8 @@
 
 			$scope.listPostings = listPostings;
 			$scope.addPosting = addPosting;
+
+			listPostings();
 		});
 	</script>
 
