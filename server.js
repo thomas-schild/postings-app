@@ -11,15 +11,16 @@ var app = express();
 
 app.use(bodyParser.json());
 
-app.get('/api/postings', function(req, res) {
+app.get('/api/postings', function(req, res, next) {
 	console.log('req GET to "api/postings"');
-	var postings = [ {
-		username: 'me',
-		content: 'my first server posting'
-	}];
 
-	res.json(postings);
-	console.log('... res: ' + res.statusMessage);
+	Posting.find(function(err, postings) {
+		if (err) {
+			return next(err);
+		}
+		res.json(postings);
+		console.log('... res: ' + res.statusMessage);
+	});
 });
 
 app.post('/api/postings', function(req, res, next) {
