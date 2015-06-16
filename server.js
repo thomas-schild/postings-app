@@ -3,6 +3,7 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var Posting = require('./models/posting');
 
 var portNr = 3001;
 
@@ -21,12 +22,21 @@ app.get('/api/postings', function(req, res) {
 	console.log('... res: ' + res.statusMessage);
 });
 
-app.post('/api/postings', function(req, res) {
+app.post('/api/postings', function(req, res, next) {
 	console.log('req POST to "api/postings"');
-	var posting = req.body;
-	// TODO: persist posting!
-	res.status(201).json(posting);
-	console.log('... res: ' + res.statusMessage);
+
+	var posting = new Posting({
+		username: req.body.username,
+		content: req.body.content
+	});
+
+	posting.save(function(err, posting) {
+		if (err) {
+			return next(err);
+		}
+		res.status(201).json(posting);
+		console.log('... res: ' + res.statusMessage);
+	});
 });
 
 app.listen(portNr, function() {
