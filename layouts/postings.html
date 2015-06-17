@@ -12,7 +12,7 @@
 		<button class="btn btn-default" ng-click="addPosting()">App Posting</button>
 
 		<h1>Recents Posts:</h1>
-		<ul class="list-group" ng-repeat="posting in postings">
+		<ul class="list-group" ng-repeat="posting in postings | orderBy: '-date'">
 			<li class="list-group-item">
 				<strong>@{{posting.username}}</strong>
 				<span>{{posting.content}}</span>
@@ -31,9 +31,9 @@
 		app.controller('postingsCtrl', function($scope, $http) {
 
 			var listPostings = function() {
-				$http.get('http://localhost:3001/api/postings')
+				$http.get('/api/postings')
 				.success(function(postings) {
-					$scope.postings = postings;
+					$scope.postings = (postings) ? postings : [];
 				})
 				.error(function(err) {
 					console.log('error on listPostings(): ' + err);
@@ -43,12 +43,12 @@
 			var addPosting = function() {
 				var postingContent = $scope.postingContent; 
 				if (postingContent) {
-					var newPosting = { username: 'Poster', content: postingContent};
-					if ($scope.postings) {
-						$scope.postings.unshift(newPosting);
-					} else {
-						$scope.postings = [ newPosting ];
-					}
+					var newPosting = { username: 'Poster', content: postingContent };
+
+					$http.post('/api/postings', newPosting)
+					.success(function(posting) {
+						$scope.postings.unshift(posting);
+					});
 				}
 				$scope.postingContent = null;
 			};

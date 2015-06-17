@@ -11,10 +11,14 @@ var app = express();
 
 app.use(bodyParser.json());
 
+app.get('/', function(req, res) {
+	res.sendfile('layouts/postings.html');
+});
+
 app.get('/api/postings', function(req, res, next) {
 	console.log('req GET to "api/postings"');
 
-	Posting.find(function(err, postings) {
+	Posting.find().sort('-date').exec(function(err, postings) {
 		if (err) {
 			return next(err);
 		}
