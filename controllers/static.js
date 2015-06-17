@@ -1,11 +1,14 @@
 /* jslint node: true */
 'use strict';
+var express = require('express');
+var router = express.Router();
+var rootDir = __dirname + '/..';
 
-var router = require('express').Router();
+router.use(express.static(rootDir + '/assets'));
 
 router.get('/', function(req, res) {
 	var opts = { 
-		root: __dirname + '/..',
+		root: rootDir,
 		dotfiles: 'deny'
 	};
 

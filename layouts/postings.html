@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">-->
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<title>PostingsApp</title>
 </head>
 <body ng-app="postingsApp">
@@ -21,44 +22,9 @@
 
 	</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
-	<script>
-		// TODO: move angular code into its own file
-		'use strict';
-
-		var app = angular.module('postingsApp', []);
-
-		app.controller('postingsCtrl', function($scope, $http) {
-
-			var listPostings = function() {
-				$http.get('/api/postings')
-				.success(function(postings) {
-					$scope.postings = (postings) ? postings : [];
-				})
-				.error(function(err) {
-					console.log('error on listPostings(): ' + err);
-				});
-			};
-
-			var addPosting = function() {
-				var postingContent = $scope.postingContent; 
-				if (postingContent) {
-					var newPosting = { username: 'Poster', content: postingContent };
-
-					$http.post('/api/postings', newPosting)
-					.success(function(posting) {
-						$scope.postings.unshift(posting);
-					});
-				}
-				$scope.postingContent = null;
-			};
-
-			$scope.listPostings = listPostings;
-			$scope.addPosting = addPosting;
-
-			listPostings();
-		});
-	</script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script> -->
+	<script src="/libs/angular.min.js"></script>
+	<script src="/app.js"></script>
 
 </body>
 </html>
