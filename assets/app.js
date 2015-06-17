@@ -3,10 +3,27 @@
 
 var app = angular.module('postingsApp', []);
 
-app.controller('postingsCtrl', function($scope, $http) {
+app.service('postingsSrv', function($http) {
+	var listPostings = function() {
+		return $http.get('/api/postings');
+	};
+
+	var addPosting = function(postingContent) {
+		if (postingContent) {
+			var newPosting = { username: 'Poster', content: postingContent };
+			return $http.post('/api/postings', newPosting);
+		}
+		// TODO: consider what to return / how to build an empty promise obj
+	};
+
+	this.fetch = listPostings;
+	this.create = addPosting;
+});
+
+app.controller('postingsCtrl', function($scope, postingsSrv) {
 
 	var listPostings = function() {
-		$http.get('/api/postings')
+		postingsSrv.fetch()
 		.success(function(postings) {
 			$scope.postings = (postings) ? postings : [];
 		})
@@ -16,15 +33,10 @@ app.controller('postingsCtrl', function($scope, $http) {
 	};
 
 	var addPosting = function() {
-		var postingContent = $scope.postingContent; 
-		if (postingContent) {
-			var newPosting = { username: 'Poster', content: postingContent };
-
-			$http.post('/api/postings', newPosting)
-			.success(function(posting) {
-				$scope.postings.unshift(posting);
-			});
-		}
+		postingsSrv.create($scope.postingContent)
+		.success(function(posting) {
+			$scope.postings.unshift(posting);
+		});
 		$scope.postingContent = null;
 	};
 
