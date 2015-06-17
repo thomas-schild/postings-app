@@ -4,7 +4,17 @@
 var router = require('express').Router();
 
 router.get('/', function(req, res) {
-	res.sendfile('layouts/postings.html');
+	var opts = { 
+		root: __dirname + '/..',
+		dotfiles: 'deny'
+	};
+
+	res.sendFile('layouts/postings.html', opts, function(err) {
+		if (err) {
+			console.log(err);
+			res.status(err.status).end();
+		}
+	});
 });
 
 module.exports = router;

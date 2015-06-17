@@ -6,7 +6,7 @@ var Posting = require('../..//models/posting');
 
 var router = express.Router();
 
-router.get('/api/postings', function(req, res, next) {
+router.get('/', function(req, res, next) {
 	console.log('req GET to "api/postings"');
 
 	Posting.find().sort('-date').exec(function(err, postings) {
@@ -18,7 +18,7 @@ router.get('/api/postings', function(req, res, next) {
 	});
 });
 
-router.post('/api/postings', function(req, res, next) {
+router.post('/', function(req, res, next) {
 	console.log('req POST to "api/postings"');
 
 	var posting = new Posting({
