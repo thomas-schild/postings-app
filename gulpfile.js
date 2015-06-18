@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
+var sourcemaps = require('gulp-sourcemaps');
 
 // gulp.task('default', ['sayHello'], function() {
 // 	console.log('running default task');
@@ -16,9 +17,11 @@ var ngAnnotate = require('gulp-ng-annotate');
 
 gulp.task('buildJs', function() {
 	gulp.src(['ng/module.js', 'ng/**/*.js'])
+	.pipe(sourcemaps.init())
 	.pipe(concat('app.js'))
 	.pipe(ngAnnotate()) // order matters! ngAnnotate must set $injects BEFORE minification with uglify
 	.pipe(uglify())
+	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('assets'));
 });
 

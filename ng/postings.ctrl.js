@@ -23,6 +23,8 @@
 				});
 			}
 		};
+
+		// console.err('dummy err just to introduce sourcemaps');
 	}
-	
+
 })();
