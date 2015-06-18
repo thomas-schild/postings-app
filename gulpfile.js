@@ -2,29 +2,12 @@
 'use strict';
 
 var gulp = require('gulp');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var ngAnnotate = require('gulp-ng-annotate');
-var sourcemaps = require('gulp-sourcemaps');
+var fs = require('fs');
 
-// gulp.task('default', ['sayHello'], function() {
-// 	console.log('running default task');
-// });
+// gulpfile is splitted into separated gulp files in subdir './gulp', which are put together like this:
+fs.readdirSync(__dirname + '/gulp').forEach( function(file) {
+	console.log('gulpfile: ' + file);
+	require('./gulp/' + file);
+} );
 
-// gulp.task('sayHello', function() {
-// 	console.log('Hello Gulp!');
-// });
-
-gulp.task('buildJs', function() {
-	gulp.src(['ng/module.js', 'ng/**/*.js'])
-	.pipe(sourcemaps.init())
-	.pipe(concat('app.js'))
-	.pipe(ngAnnotate()) // order matters! ngAnnotate must set $injects BEFORE minification with uglify
-	.pipe(uglify())
-	.pipe(sourcemaps.write())
-	.pipe(gulp.dest('assets'));
-});
-
-gulp.task('watch:js', ['buildJs'], function() { // task depends on 'buildJs', therefore 'buildJs' is run before this task
-	gulp.watch('ng/**/*.js', ['buildJs']); // whenever something changes in 'ng/**/*.js' run tasks in arr ['buildJs']
-});
+gulp.task('dev', ['watch:js', 'watch:css']);
