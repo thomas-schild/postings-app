@@ -21,3 +21,7 @@ gulp.task('buildJs', function() {
 	.pipe(uglify())
 	.pipe(gulp.dest('assets'));
 });
+
+gulp.task('watch:js', ['buildJs'], function() { // task depends on 'buildJs', therefore 'buildJs' is run before this task
+	gulp.watch('ng/**/*.js', ['buildJs']); // whenever something changes in 'ng/**/*.js' run tasks in arr ['buildJs']
+});
