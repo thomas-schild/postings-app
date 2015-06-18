@@ -17,7 +17,7 @@ var ngAnnotate = require('gulp-ng-annotate');
 gulp.task('buildJs', function() {
 	gulp.src(['ng/module.js', 'ng/**/*.js'])
 	.pipe(concat('app.js'))
-	.pipe(ngAnnotate())
+	.pipe(ngAnnotate()) // order matters! ngAnnotate must set $injects BEFORE minification with uglify
 	.pipe(uglify())
 	.pipe(gulp.dest('assets'));
 });
