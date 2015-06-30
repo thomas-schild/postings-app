@@ -1,10 +1,16 @@
 	<div class="container"> <!-- no need to define Ctrl as this is defined in routes.js -->
 
-		<h1>Create a posting</h1>
-		<input type="text" class="form-control" ng-model="postingContent"/>
-		<button class="btn btn-default" ng-click="addPosting()">App Posting</button>
+		<h1>Create a posting!</h1>
+		<form class="form-group" role="form">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="postingContent"/>
+				<span class="input-group-btn">
+					<button class="btn btn-default" ng-click="addPosting()">Add Posting</button>
+				</span>
+			</div>
+		</form>
 
-		<h1>Recents Posts:</h1>
+		<h1>Recent postings:</h1>
 		<ul class="list-group" ng-repeat="posting in postings | orderBy: '-date'">
 			<li class="list-group-item">
 				<strong>@{{posting.username}}</strong>
