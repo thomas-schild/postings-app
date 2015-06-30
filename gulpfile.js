@@ -10,4 +10,4 @@ fs.readdirSync(__dirname + '/gulp').forEach( function(file) {
 	require('./gulp/' + file);
 } );
 
-gulp.task('dev', ['dev:mongodb-start', 'dev:server', 'watch:js', 'watch:css']);
+gulp.task('dev', ['dev:server', 'watch:js', 'watch:css']);
