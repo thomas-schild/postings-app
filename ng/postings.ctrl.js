@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular.module('postingsApp')
-	.controller('postingsCtrl', PostingsCtrl);
+	.controller('PostingsCtrl', PostingsCtrl);
 
 	function PostingsCtrl($scope, postingsSvc) {
 

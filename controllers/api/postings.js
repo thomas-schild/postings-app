@@ -2,7 +2,7 @@
 'use strict';
 
 var express = require('express');
-var Posting = require('../..//models/posting');
+var Posting = require('../../models/posting');
 
 var router = express.Router();
 

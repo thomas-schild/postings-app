@@ -1,5 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module('postingsApp', []);
+	angular.module('postingsApp', [
+		'ngRoute'
+	]);
 })();
