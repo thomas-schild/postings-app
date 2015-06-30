@@ -4,6 +4,7 @@
 	angular.module('postingsApp')
 	.service('accountSvc', accountSvc);
 
+	// the accountSvc encapsulates the communication with the REST API regarding account management
 	function accountSvc($http) {
 
 		var svc = this; // consider to use a factory instead: var svc = { ... }; return svc;
