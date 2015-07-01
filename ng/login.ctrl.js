@@ -16,7 +16,7 @@
 			console.log('... got promise from accountSvc: ');
 			console.log(promise);
 			promise.then( function(user) {
-				console.log(user + ' logged in');
+				console.log(user.login + ' logged in');
 				console.log(user);
 			});
 		}
