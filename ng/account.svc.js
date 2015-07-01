@@ -15,13 +15,13 @@
 		function login(name, password) {
 			console.log('accountSvc.login is called...');
 
-			var reqData = { login: name, password: password };
+			var req = { login: name, password: password };
 			// $http-methods return promises, 
 			// use promise.then( function(res) {}, function(err) {}, function (progess) {} ) to handle
 			console.log('... sending POST req to "api/sessions" ...');
-			$http.post('api/sessions', reqData)
+			$http.post('api/sessions', req)
 			.then( function(res) {
-				console.log('... accountSvc received res: ' + res);
+				console.log('... accountSvc.login received res: ' + res);
 				// attributes of the response object: res.status, res.statusText, res.headers, res.data, res.config
 				// get token out of response and store it within the service instance
 				svc.token = res.data;
@@ -31,8 +31,15 @@
 		}
 
 		function getAccount() {
+			console.log('accountSvc.getAccount is called...');
 
-			console.log('accountSvc.getAccount is called, TODO: implement!');
+			var req = { headers: { 'x-jwt-token': svc.token } };
+
+			console.log('... sending GET req to "api/accounts" ...');
+			$http.get('api/accounts', req)
+			.then( function(res) {
+				console.log('... accountSvc.getAccount received res: ' + res);
+			});
 		}
 	}
 })();
