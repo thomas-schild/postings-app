@@ -19,20 +19,24 @@
 			console.log('... sending POST req to "api/sessions" ...');
 			// $http-methods return promises, 
 			// use promise.then( function(res) {}, function(err) {}, function (progess) {} ) to handle
+			var deffered = $q.defer();
 			$http.post('api/sessions', req).then( 
 				function(res) {
 					console.log('... accountSvc.login received res: ' + res);
 					// attributes of the response object: res.status, res.statusText, res.headers, res.data, res.config
 					// get token out of response and store it within the service instance
 					svc.token = res.data;
-					return svc.getAccount();
+					// return svc.getAccount();
+					deffered.resolve(svc.getAccount());
 				}, 
 				function(err) {
 					console.log('... accountSvc.login failed, err: ' + err);
 					console.log(err);
-					throw err.status + ':' + err.data;
+					// throw err.status + ':' + err.data;
+					deffered.reject(err);
 				}
 			);
+			return deffered.promise();
 		}
 
 		function getAccount() {
