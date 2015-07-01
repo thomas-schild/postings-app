@@ -22,7 +22,7 @@
 				}, 
 				function(err) {
 					console.log('... error on login: ');
-					console.log(user);
+					console.log(err);
 				}
 			);
 		}
