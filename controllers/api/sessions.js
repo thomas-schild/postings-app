@@ -22,12 +22,16 @@ router.post('/', function(req, res, next) {
 
 	var findCallback = function(err, account) {
 		if (err) {
+			console.log('...err: ' + err);
 			return next(err);
 		}
+		console.log('...found account: ' + account);
+		console.log('...gonna validate password...');
 		validatePasswordForAccount(password, account, validationCallback);
 	};
 
 	var validationCallback = function(err, isValid) {
+		console.log('...validation ended...');
 		if (err || !isValid) {
 			res.status(401).send();
 			console.log('... res: ' + res.statusMessage + ', err: ' + err.msg);
@@ -44,6 +48,7 @@ router.post('/', function(req, res, next) {
 module.exports = router;
 
 function validatePasswordForAccount(password, account, callback) {
+	console.log('...validating password...');
 	if (! account) { 
 		callback({ msg: 'failed to validate password for account, account is undefined' }, false); 
 	} else 	if (! password) { 
