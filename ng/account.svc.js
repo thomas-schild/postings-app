@@ -25,23 +25,23 @@
 			var req = { login: name, password: password };
 			console.log('... sending POST req to "api/sessions" ...');
 
-			var deffered = $q.defer();
-			$http.post('api/sessions', req).then( 
+			// var deffered = $q.defer();
+			return $http.post('api/sessions', req).then( 
 				function(res) {
 					console.log('... accountSvc.login received res: ' + res);
 					// get token out of response and store it within the service instance
 					svc.token = res.data;
-					// return svc.getAccount();
-					deffered.resolve(svc.getAccount());
+					return svc.getAccount();
+					// deffered.resolve(svc.getAccount());
 				}, 
 				function(err) {
 					console.log('... accountSvc.login failed, err: ' + err);
 					console.log(err);
-					// throw err.status + ':' + err.data;
-					deffered.reject(err);
+					throw err.status + ':' + err.data;
+					// deffered.reject(err);
 				}
 			);
-			return deffered.promise;
+			// return deffered.promise;
 		}
 
 		function getAccount() {
@@ -51,23 +51,23 @@
 			var req = { headers: { 'x-jwt-token': svc.token } };
 
 			console.log('... sending GET req to "api/accounts" ...');
-			var deffered = $q.defer();
-			$http.get('api/accounts', req).then( 
+			// var deffered = $q.defer();
+			return $http.get('api/accounts', req).then( 
 				// return promise, expected to contain the account
 				function(res) {
 					console.log('... accountSvc.getAccount received res: ' + res);
 					console.log(res);
-					// return res.data;
-					deffered.resolve(res.data);
+					return res.data;
+					// deffered.resolve(res.data);
 				},
 				function(err) {
 					console.log('... accountSvc.getAccount failed, err: ' + err);
 					console.log(err);
-					deffered.reject(err.status + ':' + err.data );
-					// throw err.status + ':' + err.data;
+					// deffered.reject(err.status + ':' + err.data );
+					throw err.status + ':' + err.data;
 				}
 			);
-			return deffered.promise;
+			// return deffered.promise;
 		}
 	}
 })();

@@ -15,10 +15,16 @@
 			var promise = accountSvc.login(loginname, password);
 			console.log('... got promise from accountSvc: ');
 			console.log(promise);
-			promise.then( function(user) {
-				console.log(user.login + ' logged in');
-				console.log(user);
-			});
+			promise.then( 
+				function(user) {
+					console.log('... ' + user.login + ' logged in');
+					console.log(user);
+				}, 
+				function(err) {
+					console.log('... error on login: ');
+					console.log(user);
+				}
+			);
 		}
 	}
 })();
