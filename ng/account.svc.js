@@ -5,7 +5,7 @@
 	.service('accountSvc', accountSvc);
 
 	// the accountSvc encapsulates the communication with the REST API regarding account management
-	function accountSvc($http) {
+	function accountSvc($http, $q) {
 
 		var svc = this; // consider to use a factory instead: var svc = { ... }; return svc;
 
@@ -36,7 +36,7 @@
 					deffered.reject(err);
 				}
 			);
-			return deffered.promise();
+			return deffered.promise;
 		}
 
 		function getAccount() {
@@ -45,20 +45,24 @@
 			var req = { headers: { 'x-jwt-token': svc.token } };
 
 			console.log('... sending GET req to "api/accounts" ...');
+			var deffered = $q.defer();
 			$http.get('api/accounts', req).then( 
 				// return promise containing the account
 				// see: http://chariotsolutions.com/blog/post/angularjs-corner-using-promises-q-handle-asynchronous-calls/
 				function(res) {
 					console.log('... accountSvc.getAccount received res: ' + res);
 					console.log(res);
-					return res.data;
+					// return res.data;
+					deffered.resolve(res.data);
 				},
 				function(err) {
 					console.log('... accountSvc.getAccount failed, err: ' + err);
 					console.log(err);
-					throw err.status + ':' + err.data;
+					deffered.reject(err.status + ':' + err.data);
+					// throw err.status + ':' + err.data;
 				}
 			);
+			return deffered.promise;
 		}
 	}
 })();

@@ -17,6 +17,7 @@
 			console.log(promise);
 			promise.then( function(user) {
 				console.log(user + ' logged in');
+				console.log(user);
 			});
 		}
 	}
