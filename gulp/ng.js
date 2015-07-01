@@ -12,7 +12,7 @@ gulp.task('buildJs', function() {
 	.pipe(sourcemaps.init())
 	.pipe(concat('app.js'))
 	.pipe(ngAnnotate()) // order matters! ngAnnotate must set $injects BEFORE minification with uglify
-	.pipe(uglify())
+//	.pipe(uglify())
 	.pipe(sourcemaps.write())
 	.pipe(gulp.dest('assets'));
 });

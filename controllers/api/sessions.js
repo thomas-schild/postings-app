@@ -18,9 +18,7 @@ router.post('/', function(req, res, next) {
 	
 	Account.findOne( { login: login } )
 	.select('passwordHash')
-	.exec(findCallback);
-
-	var findCallback = function(err, account) {
+	.exec(function(err, account) {
 		if (err) {
 			console.log('...err: ' + err);
 			return next(err);
@@ -28,7 +26,7 @@ router.post('/', function(req, res, next) {
 		console.log('...found account: ' + account);
 		console.log('...gonna validate password...');
 		validatePasswordForAccount(password, account, validationCallback);
-	};
+	});
 
 	var validationCallback = function(err, isValid) {
 		console.log('...validation ended...');
@@ -38,7 +36,7 @@ router.post('/', function(req, res, next) {
 			return;
 		}
 		var token = jwt.encode(req.body, config.jwtSignSecret);
-		req.send(token);
+		res.send(token);
 		console.log('... res: ' + res.statusMessage);
 	};
 

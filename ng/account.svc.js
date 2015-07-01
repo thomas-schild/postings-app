@@ -16,18 +16,23 @@
 			console.log('accountSvc.login is called...');
 
 			var req = { login: name, password: password };
+			console.log('... sending POST req to "api/sessions" ...');
 			// $http-methods return promises, 
 			// use promise.then( function(res) {}, function(err) {}, function (progess) {} ) to handle
-			console.log('... sending POST req to "api/sessions" ...');
-			$http.post('api/sessions', req)
-			.then( function(res) {
-				console.log('... accountSvc.login received res: ' + res);
-				// attributes of the response object: res.status, res.statusText, res.headers, res.data, res.config
-				// get token out of response and store it within the service instance
-				svc.token = res.data;
-
-				return getAccount();
-			});
+			$http.post('api/sessions', req).then( 
+				function(res) {
+					console.log('... accountSvc.login received res: ' + res);
+					// attributes of the response object: res.status, res.statusText, res.headers, res.data, res.config
+					// get token out of response and store it within the service instance
+					svc.token = res.data;
+					return svc.getAccount();
+				}, 
+				function(err) {
+					console.log('... accountSvc.login failed, err: ' + err);
+					console.log(err);
+					throw err.status + ':' + err.data;
+				}
+			);
 		}
 
 		function getAccount() {
@@ -36,10 +41,20 @@
 			var req = { headers: { 'x-jwt-token': svc.token } };
 
 			console.log('... sending GET req to "api/accounts" ...');
-			$http.get('api/accounts', req)
-			.then( function(res) {
-				console.log('... accountSvc.getAccount received res: ' + res);
-			});
+			$http.get('api/accounts', req).then( 
+				// return promise containing the account
+				// see: http://chariotsolutions.com/blog/post/angularjs-corner-using-promises-q-handle-asynchronous-calls/
+				function(res) {
+					console.log('... accountSvc.getAccount received res: ' + res);
+					console.log(res);
+					return res.data;
+				},
+				function(err) {
+					console.log('... accountSvc.getAccount failed, err: ' + err);
+					console.log(err);
+					throw err.status + ':' + err.data;
+				}
+			);
 		}
 	}
 })();

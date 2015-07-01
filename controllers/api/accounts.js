@@ -18,15 +18,13 @@ router.get('/', function(req, res, next) {
 	}
 	var tokenPayload = jwt.decode(token, config.jwtSignSecret);
 
-	Account.findOne({ login: tokenPayload.login }, findCallback);
-
-	var findCallback = function(err, account) {
+	Account.findOne({ login: tokenPayload.login }, function(err, account) {
 		if (err) {
 			return next(err);
 		}
 		res.json(account);
 		console.log('... res: ' + res.statusMessage); 
-	};
+	});
 
 });
 
