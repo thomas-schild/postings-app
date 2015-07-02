@@ -24,7 +24,10 @@
 			}
 		};
 
-		console.err('dummy err just to introduce sourcemaps, as it is console.error() and not console.err() ');				
+		// Note on sourcemaps: sourcemaps ar fine to map e.g. log output to the right source file
+		// but Chrome/Safari can not link to the source when there is an err on js-execution 
+		// console.error('dummy err just to introduce sourcemaps'); // <= log links to right source file
+		// console.noFunct('fail for sourcemap') // <= err in js-execution, no mapping to this source  file
 
 	}
 
