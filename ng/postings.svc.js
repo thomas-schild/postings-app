@@ -1,27 +1,50 @@
 (function() {
 	'use strict';
 
-	angular.module('postingsApp')
-	.service('postingsSvc', PostingsSvc);
+	angular.module('postingsApp').service('postingsSvc', PostingsSvc);
+
+	PostingsSvc.$inject = ['$http'];
 
 	function PostingsSvc($http) {
 
 		var svc = this; // consider to use a factory instead: var svc = { ... }; return svc;
 
 		svc.listPostings = listPostings;
-		svc.addPosting = addPosting;
+		svc.createPosting = createPosting;
 
 		function listPostings() {
-				// Note: $http.get returns a promise, which itself gets returned for promise-chaining
-			return $http.get('/api/postings');
+			return $http.get('/api/postings').then(
+				getPostingsOk,
+				getPostingsFailed
+			);
+
+			function getPostingsOk(res) {
+				var postings = res.data;
+				return postings;
+			}
+
+			function getPostingsFailed(err) {
+				console.warn('error when calling "GET api/postings": ', err);
+			}			
 		}
 
-		function addPosting(postingContent) {
+		function createPosting(postingContent) {
 			if (postingContent) {
 				var newPosting = { username: 'Poster', content: postingContent };
-				// Note: $http.post returns a promise, which itself gets returned for promise-chaining
-				return $http.post('/api/postings', newPosting); 
+				return $http.post('/api/postings', newPosting).then(
+					createPostingOk,
+					createPostingFailed
+				);
 			}
+
+			function createPostingOk(res) {
+				var postingCreated = res.data;
+				return postingCreated;
+			}
+
+			function createPostingFailed(err) {
+				console.warn('error when calling "POST api/postings": ', err);
+			}			
 		}
 	}
 })();

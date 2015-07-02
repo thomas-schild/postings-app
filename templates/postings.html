@@ -3,15 +3,15 @@
 		<h1>Create a posting!</h1>
 		<form class="form-group" role="form">
 			<div class="input-group">
-				<input type="text" class="form-control" ng-model="postingContent"/>
+				<input type="text" class="form-control" ng-model="vm.newPostingContent"/>
 				<span class="input-group-btn">
-					<button class="btn btn-default" ng-click="addPosting()">Add Posting</button>
+					<button class="btn btn-default" ng-click="vm.addPosting()">Add Posting</button>
 				</span>
 			</div>
 		</form>
 
 		<h1>Recent postings:</h1>
-		<ul class="list-group" ng-repeat="posting in postings | orderBy: '-date'">
+		<ul class="list-group" ng-repeat="posting in vm.postings | orderBy: '-date'">
 			<li class="list-group-item">
 				<strong>@{{posting.username}}</strong>
 				<span>{{posting.content}}</span>
