@@ -11,12 +11,10 @@
 		$scope.login = login;
 
 		function login(loginname, password) {
-			console.log('LoginCtrl.login ...');
-			var promise = accountSvc.login(loginname, password);
-			console.log('... got promise from accountSvc: ', promise);
-			promise.then( 
+			accountSvc.login(loginname, password).then(
 				function(user) {
 					console.log('... %s logged in', user.login);
+					$scope.$emit('loginEvent', user);
 				}, 
 				function(err) {
 					console.warn('... error on login: ', err);
