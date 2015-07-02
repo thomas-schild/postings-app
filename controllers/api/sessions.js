@@ -20,24 +20,29 @@ router.post('/', function(req, res, next) {
 	.select('passwordHash')
 	.exec(function(err, account) {
 		if (err) {
-			console.log('...err: ' + err);
+			console.log('...err: ', err);
 			return next(err);
 		}
-		console.log('...found account: ' + account);
+		console.log('...found account: ', account);
 		console.log('...gonna validate password...');
 		validatePasswordForAccount(password, account, validationCallback);
 	});
 
 	var validationCallback = function(err, isValid) {
 		console.log('...validation ended...');
-		if (err || !isValid) {
+		if (err) {
 			res.status(401).send();
-			console.log('... res: ' + res.statusMessage + ', err: ' + err.msg);
+			console.log('... res: %s, err: ', res.statusMessage, err);
+			return;
+		}
+		if (!isValid) {
+			res.status(401).send();
+			console.log('... res: %s', res.statusMessage);
 			return;
 		}
 		var token = jwt.encode(req.body, config.jwtSignSecret);
 		res.send(token);
-		console.log('... res: ' + res.statusMessage);
+		console.log('... res: %s', res.statusMessage);
 	};
 
 });

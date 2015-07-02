@@ -11,7 +11,7 @@
 			$scope.postings = (postings) ? postings : [];
 		})
 		.error(function(err) {
-			console.log('error on listPostings(): ' + err);
+			console.warn('error on listPostings(): ', err);
 		});
 
 		$scope.addPosting = function() {

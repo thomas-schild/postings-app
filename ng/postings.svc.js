@@ -12,15 +12,16 @@
 		svc.addPosting = addPosting;
 
 		function listPostings() {
+				// Note: $http.get returns a promise, which itself gets returned for promise-chaining
 			return $http.get('/api/postings');
 		}
 
 		function addPosting(postingContent) {
 			if (postingContent) {
 				var newPosting = { username: 'Poster', content: postingContent };
-				return $http.post('/api/postings', newPosting);
+				// Note: $http.post returns a promise, which itself gets returned for promise-chaining
+				return $http.post('/api/postings', newPosting); 
 			}
-		// TODO: consider what to return / how to build an empty promise obj
 		}
 	}
 })();

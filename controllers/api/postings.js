@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 			return next(err);
 		}
 		res.json(postings);
-		console.log('... res: ' + res.statusMessage);
+		console.log('... res: ', res.statusMessage);
 	});
 });
 
@@ -31,7 +31,7 @@ router.post('/', function(req, res, next) {
 			return next(err);
 		}
 		res.status(201).json(posting);
-		console.log('... res: ' + res.statusMessage);
+		console.log('... res: ', res.statusMessage);
 	});
 });
 

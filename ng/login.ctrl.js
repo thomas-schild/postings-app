@@ -13,16 +13,13 @@
 		function login(loginname, password) {
 			console.log('LoginCtrl.login ...');
 			var promise = accountSvc.login(loginname, password);
-			console.log('... got promise from accountSvc: ');
-			console.log(promise);
+			console.log('... got promise from accountSvc: ', promise);
 			promise.then( 
 				function(user) {
-					console.log('... ' + user.login + ' logged in');
-					console.log(user);
+					console.log('... %s logged in', user.login);
 				}, 
 				function(err) {
-					console.log('... error on login: ');
-					console.log(err);
+					console.warn('... error on login: ', err);
 				}
 			);
 		}

@@ -5,7 +5,7 @@
 	.service('accountSvc', accountSvc);
 
 	// the accountSvc encapsulates the communication with the REST API regarding account management
-	function accountSvc($http, $q) {
+	function accountSvc($http) {
 
 		var svc = this; // consider to use a factory instead: var svc = { ... }; return svc;
 
@@ -25,23 +25,18 @@
 			var req = { login: name, password: password };
 			console.log('... sending POST req to "api/sessions" ...');
 
-			// var deffered = $q.defer();
 			return $http.post('api/sessions', req).then( 
 				function(res) {
-					console.log('... accountSvc.login received res: ' + res);
+					console.log('... accountSvc.login received res: ', res);
 					// get token out of response and store it within the service instance
 					svc.token = res.data;
 					return svc.getAccount();
-					// deffered.resolve(svc.getAccount());
 				}, 
 				function(err) {
-					console.log('... accountSvc.login failed, err: ' + err);
-					console.log(err);
+					console.warn('... accountSvc.login failed, err: ', err);
 					throw err.status + ':' + err.data;
-					// deffered.reject(err);
 				}
 			);
-			// return deffered.promise;
 		}
 
 		function getAccount() {
@@ -51,23 +46,16 @@
 			var req = { headers: { 'x-jwt-token': svc.token } };
 
 			console.log('... sending GET req to "api/accounts" ...');
-			// var deffered = $q.defer();
 			return $http.get('api/accounts', req).then( 
-				// return promise, expected to contain the account
 				function(res) {
-					console.log('... accountSvc.getAccount received res: ' + res);
-					console.log(res);
+					console.log('... accountSvc.getAccount received res: ', res);
 					return res.data;
-					// deffered.resolve(res.data);
 				},
 				function(err) {
-					console.log('... accountSvc.getAccount failed, err: ' + err);
-					console.log(err);
-					// deffered.reject(err.status + ':' + err.data );
+					console.warn('... accountSvc.getAccount failed, err: ', err);
 					throw err.status + ':' + err.data;
 				}
 			);
-			// return deffered.promise;
 		}
 	}
 })();

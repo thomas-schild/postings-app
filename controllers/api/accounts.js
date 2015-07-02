@@ -14,7 +14,9 @@ router.get('/', function(req, res, next) {
 
 	var token = req.headers['x-jwt-token'];
 	if (!token) {
-		return res.send(401);
+		res.sendStatus(401);
+		console.log('... res: %s', res.statusMessage);
+		return;
 	}
 	var tokenPayload = jwt.decode(token, config.jwtSignSecret);
 
@@ -23,7 +25,7 @@ router.get('/', function(req, res, next) {
 			return next(err);
 		}
 		res.json(account);
-		console.log('... res: ' + res.statusMessage); 
+		console.log('... res: %s', res.statusMessage); 
 	});
 
 });
@@ -38,7 +40,7 @@ router.post('/', function(req, res, next) {
 	var passwordHash = bcrypt.hashSync(password, 8);
 
 	var account = new Account( { login: login, passwordHash: passwordHash } );
-	console.log('...gonna persist: ' + account);
+	console.log('...gonna persist: ', account);
 
 	account.save( function(err, savedAccount) {
 		if (err) {
@@ -46,7 +48,7 @@ router.post('/', function(req, res, next) {
 		}
 		var resAccount = { login: savedAccount.login }; // return only a reduced sight, TODO: check how to filter passwdHash on db side		
 		res.status(201).location('/accounts/' + resAccount.login).json(resAccount);
-		console.log('... res: ' + res.statusMessage); 	
+		console.log('... res: %s', res.statusMessage); 	
 	});
 });
 
