@@ -24,7 +24,8 @@
 			}
 		};
 
-		// console.err('dummy err just to introduce sourcemaps');
+		console.err('dummy err just to introduce sourcemaps, as it is console.error() and not console.err() ');				
+
 	}
 
 })();
