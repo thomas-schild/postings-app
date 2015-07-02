@@ -2,9 +2,9 @@
 	'use strict';
 
 	angular.module('postingsApp')
-	.service('postingsSvc', postingsSvc);
+	.service('postingsSvc', PostingsSvc);
 
-	function postingsSvc($http) {
+	function PostingsSvc($http) {
 
 		var svc = this; // consider to use a factory instead: var svc = { ... }; return svc;
 

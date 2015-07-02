@@ -1,8 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module('postingsApp')
-	.controller('AppCtrl', AppCtrl);
+	angular.module('postingsApp').controller('AppCtrl', AppCtrl);
 
 	function AppCtrl($scope) {
 
