@@ -14,7 +14,7 @@
 			accountSvc.login(loginname, password).then(
 				function(user) {
 					console.log('... %s logged in', user.login);
-					$scope.$emit('loginEvent', user);
+					$scope.$emit('loginEvent');
 				}, 
 				function(err) {
 					console.warn('... error on login: ', err);
