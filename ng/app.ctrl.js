@@ -5,7 +5,8 @@
 
 	function AppCtrl($scope) {
 
-		$scope.$on('loginEvent', function (_, user) { // TODO: clarify what '_' is!
+		$scope.$on('loginEvent', function (_, user) { 
+			console.log('received event "_": ', _);
 			$scope.currentUser = user;
 		});
 	}
